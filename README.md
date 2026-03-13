@@ -1,0 +1,296 @@
+# Travels
+
+A Django REST API application for managing travel information and data.
+
+## Table of Contents
+
+- [Technologies Used](#technologies-used)
+- [Project Structure](#project-structure)
+- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Running the Application](#running-the-application)
+- [Testing](#testing)
+- [Development](#development)
+
+## Technologies Used
+
+### Backend Framework
+- **Django** (5.2.11) - High-level Python web framework
+- **Django REST Framework** (3.16.1) - Powerful toolkit for building REST APIs
+- **djangorestframework-simplejwt** (5.5.1) - JWT authentication for Django REST Framework
+
+### Database
+- **PostgreSQL** (psycopg2-binary 2.9.11) - Robust relational database
+
+### API Documentation & Validation
+- **drf-spectacular** (0.29.0) - Automatic OpenAPI 3.0 schema generation
+- **Pillow** (12.1.1) - Python Imaging Library for image processing
+- **PyYAML** (6.0.3) - YAML parser and emitter
+
+### CORS & Environment Management
+- **django-cors-headers** (4.9.0) - Cross-Origin Resource Sharing support
+- **django-environ** (0.12.1) - Environment variable management
+
+### Code Quality & Testing
+- **pytest** (9.0.2) - Testing framework
+- **pytest-django** (4.12.0) - Django plugin for pytest
+- **Black** (26.1.0) - Code formatter
+- **Ruff** (0.15.1) - Fast Python linter
+- **factory-boy** (3.3.3) - Test fixtures and factories
+- **Faker** (40.4.0) - Generate fake data for testing
+
+### Utilities
+- **PyJWT** (2.11.0) - JSON Web Token library
+- **jsonschema** (4.26.0) - JSON schema validation
+- **typing-extensions** (4.15.0) - Typing enhancements
+- **click** (8.3.1) - Command-line interface creation kit
+
+## Project Structure
+
+```
+travels/
+├── config/                 # Django configuration
+├── travels/               # Main application package
+├── manage.py              # Django management script
+├── requirements.txt       # Production dependencies
+├── requirements-dev.txt   # Development dependencies
+├── pyproject.toml         # Project configuration (pytest, black, ruff)
+├── .env-example           # Example environment variables
+├── .gitignore             # Git ignore file
+└── README.md              # This file
+```
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- Python 3.8+ (3.10+ recommended)
+- PostgreSQL 12+
+- pip (Python package manager)
+- Virtual environment tool (venv or virtualenv)
+
+## Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/WanjikuN/travels.git
+cd travels
+```
+
+### 2. Create a Virtual Environment
+
+```bash
+# On macOS/Linux
+python3 -m venv venv
+source venv/bin/activate
+
+# On Windows
+python -m venv venv
+venv\Scripts\activate
+```
+
+### 3. Upgrade pip
+
+```bash
+pip install --upgrade pip
+```
+
+## Installation
+
+### Install Dependencies
+
+Install all required packages from requirements.txt:
+
+```bash
+pip install -r requirements.txt
+```
+
+For development, also install dev dependencies:
+
+```bash
+pip install -r requirements-dev.txt
+```
+
+## Configuration
+
+### 1. Set Up Environment Variables
+
+Copy the example environment file and configure your settings:
+
+```bash
+cp .env-example .env
+```
+
+Edit `.env` and configure the following variables:
+
+```env
+# Django Settings
+DEBUG=True
+SECRET_KEY=your-secret-key-here
+ALLOWED_HOSTS=localhost,127.0.0.1
+
+# Database Configuration
+DB_ENGINE=django.db.backends.postgresql
+DB_NAME=travels_db
+DB_USER=your_db_user
+DB_PASSWORD=your_db_password
+DB_HOST=localhost
+DB_PORT=5432
+
+# JWT Settings (if applicable)
+JWT_SECRET_KEY=your-jwt-secret-key
+```
+
+### 2. Set Up the Database
+
+Make sure PostgreSQL is running and create a database:
+
+```bash
+psql -U postgres
+CREATE DATABASE travels_db;
+```
+
+### 3. Run Migrations
+
+Apply database migrations:
+
+```bash
+python manage.py migrate
+```
+
+### 4. Create a Superuser (Optional)
+
+```bash
+python manage.py createsuperuser
+```
+
+Follow the prompts to create an admin account.
+
+## Running the Application
+
+### Start the Development Server
+
+```bash
+python manage.py runserver
+```
+
+The application will be available at `http://127.0.0.1:8000/`
+
+Access the admin panel at `http://127.0.0.1:8000/admin/`
+
+### Common Management Commands
+
+```bash
+# Run migrations
+python manage.py migrate
+
+# Create superuser
+python manage.py createsuperuser
+
+# Collect static files
+python manage.py collectstatic
+
+# Check for issues
+python manage.py check
+```
+
+## Testing
+
+### Run All Tests
+
+```bash
+pytest
+```
+
+### Run Tests with Coverage
+
+```bash
+pytest --cov=.
+```
+
+### Run Specific Tests
+
+```bash
+pytest tests/test_specific_file.py
+pytest tests/test_specific_file.py::test_specific_function
+```
+
+### Run Tests in Verbose Mode
+
+```bash
+pytest -v
+```
+
+## Development
+
+### Code Formatting
+
+Format code using Black:
+
+```bash
+black .
+```
+
+### Linting
+
+Check code quality with Ruff:
+
+```bash
+ruff check .
+ruff check . --fix  # Auto-fix issues
+```
+
+
+### Generate API Documentation
+
+The API documentation is automatically generated by drf-spectacular. Access it at:
+
+- Swagger UI: `http://127.0.0.1:8000/api/schema/swagger-ui/`
+- ReDoc: `http://127.0.0.1:8000/api/schema/redoc/`
+- OpenAPI Schema: `http://127.0.0.1:8000/api/schema/`
+
+## Tips & Best Practices
+
+- Always use a virtual environment
+- Keep sensitive information in `.env` files (never commit to git)
+- Run tests before pushing code
+- Follow PEP 8 style guide (enforced by Black and Ruff)
+- Use meaningful commit messages
+- Write tests for new features
+- Keep dependencies updated regularly
+
+## Troubleshooting
+
+### Database Connection Issues
+
+- Ensure PostgreSQL is running
+- Verify database credentials in `.env`
+- Check if the database exists: `psql -U postgres -l`
+
+### Migration Errors
+
+- Check if migrations are applied: `python manage.py showmigrations`
+- Reset migrations (development only): `python manage.py migrate zero`
+
+### Port Already in Use
+
+Run on a different port:
+
+```bash
+python manage.py runserver 8001
+```
+
+## License
+
+This project is open source and available under the MIT License.
+
+## Contributing
+
+Contributions are welcome! Please follow the code style guidelines and ensure all tests pass before submitting a pull request.
+
+---
+
+**Last Updated:** March 13, 2026
