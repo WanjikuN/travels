@@ -7,7 +7,7 @@ python_functions = ["test_*"]
 
 # formatting
 [tool.black]
-line-length = 91
+line-length = 79
 exclude = '''
 /(
     venv
@@ -18,7 +18,7 @@ exclude = '''
 
 # linting
 [tool.ruff]
-line-length = 91
+line-length = 79
 exclude = [
     "venv/",
     "migrations/",
@@ -26,4 +26,4 @@ exclude = [
 ]
 
 [tool.ruff.lint]
-select = ["E", "F", "W"]
+select = ["E", "F", "W", "I"]
